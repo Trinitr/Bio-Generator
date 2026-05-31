@@ -91,7 +91,7 @@
     ],
     friendly: [
       '{profession} by day, {interest} by night. I love meeting people who make things happen | coffee addict | bookworm | world explorer 🌍',
-      'Hey there! I’m a {profession} who loves {interest}. Let’s connect and make something awesome together!',
+      'Hey there! I'm a {profession} who loves {interest}. Let's connect and make something awesome together!',
       'Just a {profession} trying to make the world a little bit better. Ask me about {interest}!',
     ],
     creative: [
@@ -129,7 +129,7 @@
     instagram: { toneBias: 'creative', addEmoji: true, emojis: ['📸', '✨', '💫'] },
     twitter: { toneBias: 'witty', maxLength: 80, addEmoji: false },
     telegram: { toneBias: 'friendly', addEmoji: false },
-    tiktok: { toneBias: 'creative', addEmoji: true, emojis: ['🎵', '🔥', '💃'] },
+    tiktok: { toneBias: 'creative', addEmoji: true, emojis: ['🎵', '', '💃'] },
   };
 
   const examples = [
@@ -137,9 +137,9 @@
     { profession: 'Разработчик', interest: 'фотография', platform: 'instagram', tone: 'creative', length: 'short', bio: 'Кодер по будням, фотограф по выходным 📸✨' },
     { profession: 'Дизайнер', interest: 'шахматы', platform: 'twitter', tone: 'witty', length: 'short', bio: 'Дизайнер, который думает на 3 хода вперёд ♟️' },
     { profession: 'HR-специалист', interest: 'йога', platform: 'telegram', tone: 'friendly', length: 'medium', bio: 'Помогаю людям найти работу и внутренний баланс 🧘‍♀️' },
-    { profession: 'Менеджер проектов', interest: 'кулинария', platform: 'tiktok', tone: 'creative', length: 'medium', bio: 'Управляю проектами и рецептами — всё должно быть идеально смешано! 👨‍🍳' },
+    { profession: 'Менеджер проектов', interest: 'кулинария', platform: 'tiktok', tone: 'creative', length: 'medium', bio: 'Управляю проектами и рецептами — всё должно быть идеально смешано! 👨‍' },
     { profession: 'Учитель', interest: 'чтение', platform: 'linkedin', tone: 'professional', length: 'long', bio: 'Учитель с 10-летним опытом, верящий, что каждая книга открывает новый мир. Стремлюсь вдохновить учеников на любовь к знаниям на всю жизнь.' },
-    { profession: 'Психолог', interest: 'стихосложение', platform: 'instagram', tone: 'creative', length: 'short', bio: 'Слушаю твоё сердце и рифмую твои мысли 💬🌹' },
+    { profession: 'Психолог', interest: 'стихосложение', platform: 'instagram', tone: 'creative', length: 'short', bio: 'Слушаю твоё сердце и рифмую твои мысли 💬' },
     { profession: 'Аналитик данных', interest: 'шахматы', platform: 'twitter', tone: 'witty', length: 'short', bio: 'Вижу паттерны в данных и на доске. Мой следующий ход — твой инсайт.' },
   ];
 
@@ -413,7 +413,11 @@
     if (e.target && e.target.id === 'upgrade-link') { e.preventDefault(); openModal(upgradeModal); }
   });
   closeModal.addEventListener('click', () => closeModalFn(upgradeModal));
-  buyProBtn.addEventListener('click', () => { window.open('https://bazium.ru/item/ваш_товар_id', '_blank'); });
+  
+  // ИСПРАВЛЕНО: Убран перехват клика на buyProBtn
+  // Теперь ссылка работает напрямую из HTML
+  // buyProBtn.addEventListener('click', () => { window.open('https://bazium.ru/item/ваш_товар_id', '_blank'); });
+  
   window.addEventListener('click', (e) => {
     if (e.target === upgradeModal) closeModalFn(upgradeModal);
     if (e.target === apiKeyModal) closeModalFn(apiKeyModal);
