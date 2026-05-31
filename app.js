@@ -89,7 +89,7 @@
     ],
     friendly: [
       '{profession} by day, {interest} by night. I love meeting people who make things happen | coffee addict | bookworm | world explorer 🌍',
-      'Hey there! I’m a {profession} who loves {interest}. Let’s connect and make something awesome together!',
+      'Hey there! I'm a {profession} who loves {interest}. Let's connect and make something awesome together!',
       'Just a {profession} trying to make the world a little bit better. Ask me about {interest}!',
     ],
     creative: [
@@ -98,8 +98,8 @@
       'Crafting stories as a {profession} and finding inspiration in {interest}. Every day is a blank canvas.',
     ],
     witty: [
-      '{profession} (no, I don’t fix printers). {interest} enthusiast and professional overthinker. My keyboard has seen things.',
-      '{profession}. {interest}. I’d tell you a AI joke, but the response time is too slow.',
+      '{profession} (no, I don't fix printers). {interest} enthusiast and professional overthinker. My keyboard has seen things.',
+      '{profession}. {interest}. I'd tell you a AI joke, but the response time is too slow.',
       'Fluent in {profession}, comfortable with {interest}, and bilingual in sarcasm. Productivity is my cardio.',
     ],
   };
@@ -107,12 +107,12 @@
   const proTemplates = {
     mysterious: [
       '{profession} | {interest} | I know what you did last summer. Just kidding… or am I? 👀',
-      'Don’t let the {profession} fool you – I’m really here for the {interest} and the coffee.',
+      'Don't let the {profession} fool you – I'm really here for the {interest} and the coffee.',
       'Sometimes {profession}. Always {interest}. Never ordinary.',
     ],
     inspiring: [
-      '{profession} on a mission to make {interest} accessible to everyone. Join me and let’s create lasting impact.',
-      'I believe {interest} can change the world. As a {profession}, I’m building that future, one step at a time.',
+      '{profession} on a mission to make {interest} accessible to everyone. Join me and let's create lasting impact.',
+      'I believe {interest} can change the world. As a {profession}, I'm building that future, one step at a time.',
       'Do what you love, love what you do. {profession} | {interest} | changing lives through dedication and passion.',
     ],
     humorous: [
@@ -137,7 +137,7 @@
     { profession: 'Разработчик', interest: 'фотография', platform: 'instagram', tone: 'creative', length: 'short', bio: 'Кодер по будням, фотограф по выходным 📸✨' },
     { profession: 'Дизайнер', interest: 'шахматы', platform: 'twitter', tone: 'witty', length: 'short', bio: 'Дизайнер, который думает на 3 хода вперёд ♟️' },
     { profession: 'HR-специалист', interest: 'йога', platform: 'telegram', tone: 'friendly', length: 'medium', bio: 'Помогаю людям найти работу и внутренний баланс 🧘‍♀️' },
-    { profession: 'Менеджер проектов', interest: 'кулинария', platform: 'tiktok', tone: 'creative', length: 'medium', bio: 'Управляю проектами и рецептами — всё должно быть идеально смешано! 👨‍🍳' },
+    { profession: 'Менеджер проектов', interest: 'кулинария', platform: 'tiktok', tone: 'creative', length: 'medium', bio: 'Управляю проектами и рецептами — всё должно быть идеально смешано! 👨‍' },
     { profession: 'Учитель', interest: 'чтение', platform: 'linkedin', tone: 'professional', length: 'long', bio: 'Учитель с 10-летним опытом, верящий, что каждая книга открывает новый мир. Стремлюсь вдохновить учеников на любовь к знаниям на всю жизнь.' },
     { profession: 'Психолог', interest: 'стихосложение', platform: 'instagram', tone: 'creative', length: 'short', bio: 'Слушаю твоё сердце и рифмую твои мысли 💬🌹' },
     { profession: 'Аналитик данных', interest: 'шахматы', platform: 'twitter', tone: 'witty', length: 'short', bio: 'Вижу паттерны в данных и на доске. Мой следующий ход — твой инсайт.' },
@@ -489,10 +489,10 @@
   generateHashtagsBtn.addEventListener('click', handleGenerateHashtags);
   upgradeLink.addEventListener('click', (e) => { e.preventDefault(); openModalFn(upgradeModal); });
   closeModal.addEventListener('click', () => closeModalFn(upgradeModal));
-  buyProBtn.addEventListener('click', () => {
-    // Replace with your actual lava.top product link
-    window.open('https://app.lava.top/products/c277d241-1187-453b-8b98-b042dbfbffec', '_blank');
-  });
+  
+  // УБРАНО: Обработчик buyProBtn удалён — теперь ссылка работает напрямую из HTML href
+  // Кнопка использует href="https://t.me/send?start=IVZFVmyUqKMc" из index.html
+  
   window.addEventListener('click', (e) => {
     if (e.target === upgradeModal) closeModalFn(upgradeModal);
     if (e.target === apiKeyModal) closeModalFn(apiKeyModal);
