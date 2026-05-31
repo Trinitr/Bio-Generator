@@ -3,53 +3,148 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bio Generator – Создай идеальное описание профиля</title>
+  <title>Bio Generator Pro – профессиональные описания для соцсетей</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Bio Generator</h1>
-    <p class="subtitle">Создайте цепляющее описание для LinkedIn, Twitter, Instagram или резюме за секунды.</p>
+  <div class="container" id="app">
+    <div class="header">
+      <div class="logo"><i class="fas fa-feather-alt"></i> Bio Generator</div>
+      <div class="badge" id="pro-badge"><i class="fas fa-crown"></i> <span id="pro-status">Free</span></div>
+    </div>
+    <p class="subtitle">Профессиональные описания для LinkedIn, Instagram, Twitter, Telegram и TikTok</p>
 
-    <div class="card">
-      <label for="profession">Ваша профессия или роль:</label>
-      <input type="text" id="profession" placeholder="Например: маркетолог, разработчик, дизайнер">
-
-      <label for="interest">Ваше хобби или интерес (опционально):</label>
-      <input type="text" id="interest" placeholder="Например: путешествия, fotografia, шахматы">
-
-      <label for="tone">Тон описания:</label>
-      <select id="tone">
-        <option value="professional">Профессиональный</option>
-        <option value="friendly">Дружелюбный</option>
-        <option value="creative">Творческий</option>
-        <option value="witty">Остроумный</option>
-      </select>
-
-      <button id="generate">Сгенерировать bio</button>
+    <div class="stats-bar" id="stats-bar">
+      <span><i class="fas fa-chart-line"></i> Сегодня: <strong id="today-count">0</strong></span>
+      <span><i class="fas fa-globe"></i> Всего: <strong id="total-count">0</strong></span>
     </div>
 
-    <div id="result" class="hidden">
-      <h2>Ваш вариант био:</h2>
+    <div class="card main-card">
+      <div class="form-group">
+        <label for="profession"><i class="fas fa-briefcase"></i> Ваша профессия или роль:</label>
+        <input type="text" id="profession" placeholder="Например: маркетолог, разработчик, дизайнер" required>
+      </div>
+      <div class="form-group">
+        <label for="interest"><i class="fas fa-heart"></i> Хобби или интерес (опционально):</label>
+        <input type="text" id="interest" placeholder="Например: путешествия, фотография, шахматы">
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-share-alt"></i> Выберите платформу:</label>
+        <div class="platform-grid" id="platform-grid">
+          <label class="platform-card" data-platform="linkedin">
+            <input type="radio" name="platform" value="linkedin" checked>
+            <i class="fab fa-linkedin"></i><span>LinkedIn</span>
+          </label>
+          <label class="platform-card" data-platform="instagram">
+            <input type="radio" name="platform" value="instagram">
+            <i class="fab fa-instagram"></i><span>Instagram</span>
+          </label>
+          <label class="platform-card" data-platform="twitter">
+            <input type="radio" name="platform" value="twitter">
+            <i class="fab fa-twitter"></i><span>Twitter/X</span>
+          </label>
+          <label class="platform-card" data-platform="telegram">
+            <input type="radio" name="platform" value="telegram">
+            <i class="fab fa-telegram-plane"></i><span>Telegram</span>
+          </label>
+          <label class="platform-card" data-platform="tiktok">
+            <input type="radio" name="platform" value="tiktok">
+            <i class="fab fa-tiktok"></i><span>TikTok</span>
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="tone"><i class="fas fa-palette"></i> Тон описания:</label>
+        <select id="tone" class="tone-select">
+          <option value="professional">💼 Профессиональный</option>
+          <option value="friendly">😊 Дружелюбный</option>
+          <option value="creative">🎨 Творческий</option>
+          <option value="witty">😂 Остроумный</option>
+          <option value="mysterious" class="pro-option" disabled>🔮 Таинственный (Pro)</option>
+          <option value="inspiring" class="pro-option" disabled>🌟 Вдохновляющий (Pro)</option>
+          <option value="humorous" class="pro-option" disabled>🎭 Юмористический (Pro)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="length"><i class="fas fa-ruler"></i> Длина:</label>
+        <select id="length" class="tone-select">
+          <option value="short">Короткая (до 80 символов)</option>
+          <option value="medium" selected>Средняя (80-160 символов)</option>
+          <option value="long">Длинная (160-300 символов)</option>
+        </select>
+      </div>
+      <button id="generate" class="btn-primary">
+        <i class="fas fa-wand-magic-sparkles"></i> <span>Сгенерировать bio</span>
+      </button>
+    </div>
+
+    <div class="card examples-card">
+      <h3><i class="fas fa-star"></i> Примеры популярных био</h3>
+      <p class="examples-hint">Нажмите на пример, чтобы подставить в форму</p>
+      <div class="examples-grid" id="examples-grid"></div>
+    </div>
+
+    <div id="spinner" class="hidden spinner-container">
+      <div class="spinner"></div>
+      <p>Генерируем ваше био...</p>
+    </div>
+
+    <div id="result" class="hidden card result-card fade-in">
+      <div class="result-header">
+        <h2><i class="fas fa-check-circle"></i> Ваше био готово</h2>
+        <button id="regenerate" class="btn-sm" title="Сгенерировать ещё"><i class="fas fa-rotate"></i></button>
+      </div>
       <div class="bio-output" id="bio-output"></div>
-      <button id="copy">Копировать</button>
-      <button id="another">Ещё вариант</button>
-      <p class="hint">Бесплатно: 3 генерации в день. <a id="upgrade-link" href="#">Получить Pro</a> безлимит и больше тонов.</p>
+      <div class="bio-actions">
+        <button id="copy" class="btn-secondary"><i class="fas fa-copy"></i> Копировать</button>
+        <button id="download-img" class="btn-secondary"><i class="fas fa-image"></i> Скачать</button>
+        <button id="email-btn" class="btn-secondary"><i class="fas fa-envelope"></i> На email</button>
+      </div>
+      <div class="hashtag-section">
+        <button id="generate-hashtags" class="btn-outline"><i class="fas fa-hashtag"></i> Сгенерировать хэштеги</button>
+        <div id="hashtag-output" class="hashtag-output hidden"></div>
+      </div>
+      <p class="hint" id="hint-text">Бесплатно: 3 генерации в день. <a id="upgrade-link" href="#">Получить Pro</a></p>
+    </div>
+
+    <div class="card history-card" id="history-card">
+      <h3><i class="fas fa-clock-rotate"></i> История генераций</h3>
+      <div id="history-list" class="history-list"></div>
+      <button id="clear-history" class="btn-sm btn-danger">Очистить историю</button>
     </div>
 
     <div id="upgrade-modal" class="modal hidden">
       <div class="modal-content">
         <span class="close">&times;</span>
+        <div class="modal-icon"><i class="fas fa-crown"></i></div>
         <h2>Bio Generator Pro</h2>
-        <p>За $9 вы получаете:</p>
-        <ul>
-          <li>Неограниченное количество генераций</li>
-          <li>Дополнительные тоны: загадочный, вдохновляющий, краткий</li>
-          <li>Возможность сохранять любимые варианты</li>
-          <li>Без водяного знака на результатах</li>
-        </p>
-        <button id="buy-pro">Купить за $9 (через Gumroad)</button>
-        <p class="small">После оплаты вы получите ссылку для разблокировки Pro.</p>
+        <p class="modal-sub">Разблокируйте все возможности</p>
+        <ul class="modal-features">
+          <li><i class="fas fa-infinity"></i> Безлимитные генерации</li>
+          <li><i class="fas fa-robot"></i> Генерация через ChatGPT</li>
+          <li><i class="fas fa-palette"></i> Все тоны и платформы</li>
+          <li><i class="fas fa-water"></i> Без водяного знака</li>
+        </ul>
+        <p class="modal-price">Всего <strong>9$</strong> единоразово</p>
+        <button id="buy-pro" class="btn-primary buy-btn">
+          <i class="fas fa-shopping-cart"></i> Купить Pro
+        </button>
+        <p class="modal-hint">Оплата через <strong>bazium.ru</strong></p>
+      </div>
+    </div>
+
+    <div id="apikey-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close apikey-close">&times;</span>
+        <h2><i class="fas fa-key"></i> OpenAI API Key</h2>
+        <p>Введите ваш API ключ для генерации через ChatGPT. Ключ хранится локально.</p>
+        <input type="password" id="api-key-input" placeholder="sk-..." class="api-key-input">
+        <button id="save-api-key" class="btn-primary">Сохранить</button>
       </div>
     </div>
 
