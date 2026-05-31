@@ -13,68 +13,51 @@
 </head>
 <body>
   <div class="container" id="app">
-    <!-- Header -->
     <div class="header">
       <div class="logo"><i class="fas fa-feather-alt"></i> Bio Generator</div>
-      <div class="badge" id="pro-badge">
-        <i class="fas fa-crown"></i> <span id="pro-status">Free</span>
-      </div>
+      <div class="badge" id="pro-badge"><i class="fas fa-crown"></i> <span id="pro-status">Free</span></div>
     </div>
     <p class="subtitle">Профессиональные описания для LinkedIn, Instagram, Twitter, Telegram и TikTok</p>
 
-    <!-- Stats bar -->
     <div class="stats-bar" id="stats-bar">
       <span><i class="fas fa-chart-line"></i> Сегодня: <strong id="today-count">0</strong></span>
       <span><i class="fas fa-globe"></i> Всего: <strong id="total-count">0</strong></span>
     </div>
 
-    <!-- Main form -->
     <div class="card main-card">
-      <!-- Profession -->
       <div class="form-group">
         <label for="profession"><i class="fas fa-briefcase"></i> Ваша профессия или роль:</label>
         <input type="text" id="profession" placeholder="Например: маркетолог, разработчик, дизайнер" required>
       </div>
-
-      <!-- Interest -->
       <div class="form-group">
         <label for="interest"><i class="fas fa-heart"></i> Хобби или интерес (опционально):</label>
         <input type="text" id="interest" placeholder="Например: путешествия, фотография, шахматы">
       </div>
-
-      <!-- Platform selection -->
       <div class="form-group">
         <label><i class="fas fa-share-alt"></i> Выберите платформу:</label>
         <div class="platform-grid" id="platform-grid">
           <label class="platform-card" data-platform="linkedin">
             <input type="radio" name="platform" value="linkedin" checked>
-            <i class="fab fa-linkedin"></i>
-            <span>LinkedIn</span>
+            <i class="fab fa-linkedin"></i><span>LinkedIn</span>
           </label>
           <label class="platform-card" data-platform="instagram">
             <input type="radio" name="platform" value="instagram">
-            <i class="fab fa-instagram"></i>
-            <span>Instagram</span>
+            <i class="fab fa-instagram"></i><span>Instagram</span>
           </label>
           <label class="platform-card" data-platform="twitter">
             <input type="radio" name="platform" value="twitter">
-            <i class="fab fa-twitter"></i>
-            <span>Twitter/X</span>
+            <i class="fab fa-twitter"></i><span>Twitter/X</span>
           </label>
           <label class="platform-card" data-platform="telegram">
             <input type="radio" name="platform" value="telegram">
-            <i class="fab fa-telegram-plane"></i>
-            <span>Telegram</span>
+            <i class="fab fa-telegram-plane"></i><span>Telegram</span>
           </label>
           <label class="platform-card" data-platform="tiktok">
             <input type="radio" name="platform" value="tiktok">
-            <i class="fab fa-tiktok"></i>
-            <span>TikTok</span>
+            <i class="fab fa-tiktok"></i><span>TikTok</span>
           </label>
         </div>
       </div>
-
-      <!-- Tone -->
       <div class="form-group">
         <label for="tone"><i class="fas fa-palette"></i> Тон описания:</label>
         <select id="tone" class="tone-select">
@@ -87,8 +70,6 @@
           <option value="humorous" class="pro-option" disabled>🎭 Юмористический (Pro)</option>
         </select>
       </div>
-
-      <!-- Length -->
       <div class="form-group">
         <label for="length"><i class="fas fa-ruler"></i> Длина:</label>
         <select id="length" class="tone-select">
@@ -97,29 +78,22 @@
           <option value="long">Длинная (160-300 символов)</option>
         </select>
       </div>
-
-      <!-- Generate button -->
       <button id="generate" class="btn-primary">
         <i class="fas fa-wand-magic-sparkles"></i> <span>Сгенерировать bio</span>
       </button>
     </div>
 
-    <!-- Examples section -->
     <div class="card examples-card">
       <h3><i class="fas fa-star"></i> Примеры популярных био</h3>
       <p class="examples-hint">Нажмите на пример, чтобы подставить в форму</p>
-      <div class="examples-grid" id="examples-grid">
-        <!-- Examples are built by JS -->
-      </div>
+      <div class="examples-grid" id="examples-grid"></div>
     </div>
 
-    <!-- Loading spinner -->
     <div id="spinner" class="hidden spinner-container">
       <div class="spinner"></div>
       <p>Генерируем ваше био...</p>
     </div>
 
-    <!-- Result section -->
     <div id="result" class="hidden card result-card fade-in">
       <div class="result-header">
         <h2><i class="fas fa-check-circle"></i> Ваше био готово</h2>
@@ -135,17 +109,15 @@
         <button id="generate-hashtags" class="btn-outline"><i class="fas fa-hashtag"></i> Сгенерировать хэштеги</button>
         <div id="hashtag-output" class="hashtag-output hidden"></div>
       </div>
-      <p class="hint" id="hint-text">Бесплатно: 3 генерации в день. <a id="upgrade-link" href="#">Получить Pro</a></p>
+      <p class="hint" id="hint-text">Бесплатно: 3 генерации в день. <a id="upgrade-link" href="https://app.lava.top/products/c277d241-1187-453b-8b98-b042dbfbffec" target="_blank" rel="noopener">Получить Pro</a></p>
     </div>
 
-    <!-- History section -->
     <div class="card history-card" id="history-card">
       <h3><i class="fas fa-clock-rotate"></i> История генераций</h3>
       <div id="history-list" class="history-list"></div>
       <button id="clear-history" class="btn-sm btn-danger">Очистить историю</button>
     </div>
 
-    <!-- Upgrade modal -->
     <div id="upgrade-modal" class="modal hidden">
       <div class="modal-content">
         <span class="close">&times;</span>
@@ -159,14 +131,13 @@
           <li><i class="fas fa-water"></i> Без водяного знака</li>
         </ul>
         <p class="modal-price">Всего <strong>9$</strong> единоразово</p>
-        <button id="buy-pro" class="btn-primary buy-btn">
+        <a id="buy-pro" class="btn-primary buy-btn" href="https://app.lava.top/products/c277d241-1187-453b-8b98-b042dbfbffec" target="_blank" rel="noopener" style="display: inline-block; text-decoration: none; cursor: pointer;">
           <i class="fas fa-shopping-cart"></i> Купить Pro
-        </button>
-        <p class="modal-hint">Оплата через <strong>lava.top</strong></p>
+        </a>
+        <p class="modal-hint">Оплата через <strong>Lava.top</strong> • Мгновенная активация</p>
       </div>
     </div>
 
-    <!-- AI API Key setting modal -->
     <div id="apikey-modal" class="modal hidden">
       <div class="modal-content">
         <span class="close apikey-close">&times;</span>
@@ -177,10 +148,8 @@
       </div>
     </div>
 
-    <!-- Watermark -->
     <div id="watermark" class="watermark">Создано с Bio Generator Free</div>
   </div>
-
   <script src="app.js"></script>
 </body>
 </html>
