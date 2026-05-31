@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bio Generator – Создай идеальное описание профиля</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Bio Generator</h1>
+    <p class="subtitle">Создайте цепляющее описание для LinkedIn, Twitter, Instagram или резюме за секунды.</p>
+
+    <div class="card">
+      <label for="profession">Ваша профессия или роль:</label>
+      <input type="text" id="profession" placeholder="Например: маркетолог, разработчик, дизайнер">
+
+      <label for="interest">Ваше хобби или интерес (опционально):</label>
+      <input type="text" id="interest" placeholder="Например: путешествия, fotografia, шахматы">
+
+      <label for="tone">Тон описания:</label>
+      <select id="tone">
+        <option value="professional">Профессиональный</option>
+        <option value="friendly">Дружелюбный</option>
+        <option value="creative">Творческий</option>
+        <option value="witty">Остроумный</option>
+      </select>
+
+      <button id="generate">Сгенерировать bio</button>
+    </div>
+
+    <div id="result" class="hidden">
+      <h2>Ваш вариант био:</h2>
+      <div class="bio-output" id="bio-output"></div>
+      <button id="copy">Копировать</button>
+      <button id="another">Ещё вариант</button>
+      <p class="hint">Бесплатно: 3 генерации в день. <a id="upgrade-link" href="#">Получить Pro</a> безлимит и больше тонов.</p>
+    </div>
+
+    <div id="upgrade-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Bio Generator Pro</h2>
+        <p>За $9 вы получаете:</p>
+        <ul>
+          <li>Неограниченное количество генераций</li>
+          <li>Дополнительные тоны: загадочный, вдохновляющий, краткий</li>
+          <li>Возможность сохранять любимые варианты</li>
+          <li>Без водяного знака на результатах</li>
+        </p>
+        <button id="buy-pro">Купить за $9 (через Gumroad)</button>
+        <p class="small">После оплаты вы получите ссылку для разблокировки Pro.</p>
+      </div>
+    </div>
+
+    <div id="watermark" class="watermark">Создано с Bio Generator Free</div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
