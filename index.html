@@ -108,9 +108,7 @@
     <div class="card examples-card">
       <h3><i class="fas fa-star"></i> Примеры популярных био</h3>
       <p class="examples-hint">Нажмите на пример, чтобы подставить в форму</p>
-      <div class="examples-grid" id="examples-grid">
-        <!-- Examples are built by JS -->
-      </div>
+      <div class="examples-grid" id="examples-grid"></div>
     </div>
 
     <!-- Loading spinner -->
@@ -135,7 +133,8 @@
         <button id="generate-hashtags" class="btn-outline"><i class="fas fa-hashtag"></i> Сгенерировать хэштеги</button>
         <div id="hashtag-output" class="hashtag-output hidden"></div>
       </div>
-      <p class="hint" id="hint-text">Бесплатно: 3 генерации в день. <a id="upgrade-link" href="#">Получить Pro</a></p>
+      <!-- 🔗 ИЗМЕНЕНО: Ссылка на Crypto Bot -->
+      <p class="hint" id="hint-text">Бесплатно: 3 генерации в день. <a id="upgrade-link" href="https://t.me/send?start=IVZFVmyUqKMc" target="_blank" rel="noopener">Получить Pro</a></p>
     </div>
 
     <!-- History section -->
@@ -159,10 +158,12 @@
           <li><i class="fas fa-water"></i> Без водяного знака</li>
         </ul>
         <p class="modal-price">Всего <strong>9$</strong> единоразово</p>
-        <button id="buy-pro" class="btn-primary buy-btn">
-          <i class="fas fa-shopping-cart"></i> Купить Pro
-        </button>
-        <p class="modal-hint">Оплата через <strong>lava.top</strong></p>
+        <!-- 🔗 ИЗМЕНЕНО: Кнопка теперь ссылка на Crypto Bot -->
+        <a id="buy-pro" class="btn-primary buy-btn" href="https://t.me/send?start=IVZFVmyUqKMc" target="_blank" rel="noopener" style="display: inline-block; text-decoration: none; cursor: pointer; border: none;">
+          <i class="fas fa-wallet"></i> Оплатить Crypto (USDT)
+        </a>
+        <!-- 🔗 ИЗМЕНЕНО: Текст про оплату -->
+        <p class="modal-hint">Оплата через <strong>Crypto Bot</strong> • Мгновенно • Анонимно</p>
       </div>
     </div>
 
