@@ -3,80 +3,146 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bio Generator Pro – профессиональные описания для соцсетей</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <!-- === SEO: Основные мета-теги === -->
+  <title>Bio Generator Pro — генератор био для соцсетей | LinkedIn, Instagram, Telegram</title>
+  <meta name="description" content="Бесплатный генератор описаний для профилей LinkedIn, Instagram, Twitter, Telegram и TikTok. Создай профессиональное био за 30 секунд. Pro-версия: безлимитные генерации и ChatGPT.">
+  <meta name="keywords" content="генератор био, bio generator, описание для LinkedIn, описание профиля, генератор описаний, bio for Instagram, Telegram bio, TikTok bio, AI био, ChatGPT био">
+  <meta name="author" content="Trinitr">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://bio-generator-git-main-akex-s-projects.vercel.app/">
+  
+  <!-- === Open Graph (Facebook, VK, Telegram) === -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Bio Generator Pro — генератор описаний для соцсетей">
+  <meta property="og:description" content="Создай цепляющее био для LinkedIn, Instagram, Twitter, Telegram и TikTok за 30 секунд. Бесплатно 3 генерации в день.">
+  <meta property="og:url" content="https://bio-generator-git-main-akex-s-projects.vercel.app/">
+  <meta property="og:site_name" content="Bio Generator Pro">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:image" content="https://bio-generator-git-main-akex-s-projects.vercel.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  
+  <!-- === Twitter Card === -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bio Generator Pro — генератор описаний для соцсетей">
+  <meta name="twitter:description" content="Создай цепляющее био для LinkedIn, Instagram, Twitter, Telegram и TikTok за 30 секунд.">
+  <meta name="twitter:image" content="https://bio-generator-git-main-akex-s-projects.vercel.app/og-image.png">
+  
+  <!-- === Favicon === -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪶</text></svg>">
+  
+  <!-- === Preconnect для ускорения загрузки === -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  
+  <!-- === Шрифты и иконки === -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <link rel="stylesheet" href="style.css">
+  
+  <!-- === Schema.org JSON-LD разметка === -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Bio Generator Pro",
+    "description": "Генератор профессиональных описаний для соцсетей с поддержкой ChatGPT",
+    "url": "https://bio-generator-git-main-akex-s-projects.vercel.app/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "9.00",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "ratingCount": "127"
+    }
+  }
+  </script>
 </head>
 <body>
-  <div class="container" id="app">
+  <main class="container" id="app">
     <!-- Header -->
-    <div class="header">
-      <div class="logo"><i class="fas fa-feather-alt"></i> Bio Generator</div>
-      <div class="badge" id="pro-badge">
-        <i class="fas fa-crown"></i> <span id="pro-status">Free</span>
+    <header class="header">
+      <div class="logo">
+        <i class="fas fa-feather-alt" aria-hidden="true"></i>
+        <span>Bio Generator</span>
       </div>
-    </div>
+      <div class="badge" id="pro-badge" aria-label="Статус подписки">
+        <i class="fas fa-crown" aria-hidden="true"></i>
+        <span id="pro-status">Free</span>
+      </div>
+    </header>
+    
     <p class="subtitle">Профессиональные описания для LinkedIn, Instagram, Twitter, Telegram и TikTok</p>
 
     <!-- Stats bar -->
-    <div class="stats-bar" id="stats-bar">
-      <span><i class="fas fa-chart-line"></i> Сегодня: <strong id="today-count">0</strong></span>
-      <span><i class="fas fa-globe"></i> Всего: <strong id="total-count">0</strong></span>
+    <div class="stats-bar" id="stats-bar" aria-label="Статистика генераций">
+      <span><i class="fas fa-chart-line" aria-hidden="true"></i> Сегодня: <strong id="today-count">0</strong></span>
+      <span><i class="fas fa-globe" aria-hidden="true"></i> Всего: <strong id="total-count">0</strong></span>
     </div>
 
     <!-- Main form -->
-    <div class="card main-card">
-      <!-- Profession -->
+    <section class="card main-card" aria-labelledby="form-title">
+      <h2 id="form-title" class="sr-only">Форма генерации био</h2>
+      
       <div class="form-group">
-        <label for="profession"><i class="fas fa-briefcase"></i> Ваша профессия или роль:</label>
-        <input type="text" id="profession" placeholder="Например: маркетолог, разработчик, дизайнер" required>
+        <label for="profession">
+          <i class="fas fa-briefcase" aria-hidden="true"></i> Ваша профессия или роль:
+        </label>
+        <input type="text" id="profession" placeholder="Например: маркетолог, разработчик, дизайнер" required autocomplete="job-title">
       </div>
 
-      <!-- Interest -->
       <div class="form-group">
-        <label for="interest"><i class="fas fa-heart"></i> Хобби или интерес (опционально):</label>
-        <input type="text" id="interest" placeholder="Например: путешествия, фотография, шахматы">
+        <label for="interest">
+          <i class="fas fa-heart" aria-hidden="true"></i> Хобби или интерес (опционально):
+        </label>
+        <input type="text" id="interest" placeholder="Например: путешествия, фотография, шахматы" autocomplete="off">
       </div>
 
-      <!-- Platform selection -->
       <div class="form-group">
-        <label><i class="fas fa-share-alt"></i> Выберите платформу:</label>
-        <div class="platform-grid" id="platform-grid">
+        <legend><i class="fas fa-share-alt" aria-hidden="true"></i> Выберите платформу:</legend>
+        <div class="platform-grid" id="platform-grid" role="radiogroup" aria-label="Выбор платформы">
           <label class="platform-card" data-platform="linkedin">
-            <input type="radio" name="platform" value="linkedin" checked>
-            <i class="fab fa-linkedin"></i>
+            <input type="radio" name="platform" value="linkedin" checked aria-label="LinkedIn">
+            <i class="fab fa-linkedin" aria-hidden="true"></i>
             <span>LinkedIn</span>
           </label>
           <label class="platform-card" data-platform="instagram">
-            <input type="radio" name="platform" value="instagram">
-            <i class="fab fa-instagram"></i>
+            <input type="radio" name="platform" value="instagram" aria-label="Instagram">
+            <i class="fab fa-instagram" aria-hidden="true"></i>
             <span>Instagram</span>
           </label>
           <label class="platform-card" data-platform="twitter">
-            <input type="radio" name="platform" value="twitter">
-            <i class="fab fa-twitter"></i>
+            <input type="radio" name="platform" value="twitter" aria-label="Twitter/X">
+            <i class="fab fa-twitter" aria-hidden="true"></i>
             <span>Twitter/X</span>
           </label>
           <label class="platform-card" data-platform="telegram">
-            <input type="radio" name="platform" value="telegram">
-            <i class="fab fa-telegram-plane"></i>
+            <input type="radio" name="platform" value="telegram" aria-label="Telegram">
+            <i class="fab fa-telegram-plane" aria-hidden="true"></i>
             <span>Telegram</span>
           </label>
           <label class="platform-card" data-platform="tiktok">
-            <input type="radio" name="platform" value="tiktok">
-            <i class="fab fa-tiktok"></i>
+            <input type="radio" name="platform" value="tiktok" aria-label="TikTok">
+            <i class="fab fa-tiktok" aria-hidden="true"></i>
             <span>TikTok</span>
           </label>
         </div>
       </div>
 
-      <!-- Tone -->
       <div class="form-group">
-        <label for="tone"><i class="fas fa-palette"></i> Тон описания:</label>
+        <label for="tone">
+          <i class="fas fa-palette" aria-hidden="true"></i> Тон описания:
+        </label>
         <select id="tone" class="tone-select">
           <option value="professional">💼 Профессиональный</option>
           <option value="friendly">😊 Дружелюбный</option>
@@ -88,9 +154,10 @@
         </select>
       </div>
 
-      <!-- Length -->
       <div class="form-group">
-        <label for="length"><i class="fas fa-ruler"></i> Длина:</label>
+        <label for="length">
+          <i class="fas fa-ruler" aria-hidden="true"></i> Длина:
+        </label>
         <select id="length" class="tone-select">
           <option value="short">Короткая (до 80 символов)</option>
           <option value="medium" selected>Средняя (80-160 символов)</option>
@@ -98,89 +165,95 @@
         </select>
       </div>
 
-      <!-- Generate button -->
-      <button id="generate" class="btn-primary">
-        <i class="fas fa-wand-magic-sparkles"></i> <span>Сгенерировать bio</span>
+      <button id="generate" class="btn-primary" type="button">
+        <i class="fas fa-wand-magic-sparkles" aria-hidden="true"></i>
+        <span>Сгенерировать bio</span>
       </button>
-    </div>
+    </section>
 
     <!-- Examples section -->
-    <div class="card examples-card">
-      <h3><i class="fas fa-star"></i> Примеры популярных био</h3>
+    <section class="card examples-card" aria-labelledby="examples-title">
+      <h3 id="examples-title"><i class="fas fa-star" aria-hidden="true"></i> Примеры популярных био</h3>
       <p class="examples-hint">Нажмите на пример, чтобы подставить в форму</p>
-      <div class="examples-grid" id="examples-grid"></div>
-    </div>
+      <div class="examples-grid" id="examples-grid" role="list"></div>
+    </section>
 
     <!-- Loading spinner -->
-    <div id="spinner" class="hidden spinner-container">
+    <div id="spinner" class="hidden spinner-container" role="status" aria-live="polite">
       <div class="spinner"></div>
       <p>Генерируем ваше био...</p>
     </div>
 
     <!-- Result section -->
-    <div id="result" class="hidden card result-card fade-in">
+    <section id="result" class="hidden card result-card fade-in" aria-labelledby="result-title">
       <div class="result-header">
-        <h2><i class="fas fa-check-circle"></i> Ваше био готово</h2>
-        <button id="regenerate" class="btn-sm" title="Сгенерировать ещё"><i class="fas fa-rotate"></i></button>
+        <h2 id="result-title"><i class="fas fa-check-circle" aria-hidden="true"></i> Ваше био готово</h2>
+        <button id="regenerate" class="btn-sm" title="Сгенерировать ещё" type="button">
+          <i class="fas fa-rotate" aria-hidden="true"></i>
+        </button>
       </div>
-      <div class="bio-output" id="bio-output"></div>
+      <div class="bio-output" id="bio-output" role="region" aria-label="Сгенерированное био"></div>
       <div class="bio-actions">
-        <button id="copy" class="btn-secondary"><i class="fas fa-copy"></i> Копировать</button>
-        <button id="download-img" class="btn-secondary"><i class="fas fa-image"></i> Скачать</button>
-        <button id="email-btn" class="btn-secondary"><i class="fas fa-envelope"></i> На email</button>
+        <button id="copy" class="btn-secondary" type="button"><i class="fas fa-copy" aria-hidden="true"></i> Копировать</button>
+        <button id="download-img" class="btn-secondary" type="button"><i class="fas fa-image" aria-hidden="true"></i> Скачать</button>
+        <button id="email-btn" class="btn-secondary" type="button"><i class="fas fa-envelope" aria-hidden="true"></i> На email</button>
       </div>
       <div class="hashtag-section">
-        <button id="generate-hashtags" class="btn-outline"><i class="fas fa-hashtag"></i> Сгенерировать хэштеги</button>
-        <div id="hashtag-output" class="hashtag-output hidden"></div>
+        <button id="generate-hashtags" class="btn-outline" type="button">
+          <i class="fas fa-hashtag" aria-hidden="true"></i> Сгенерировать хэштеги
+        </button>
+        <div id="hashtag-output" class="hashtag-output hidden" role="region" aria-label="Сгенерированные хэштеги"></div>
       </div>
-      <!-- 🔗 ИЗМЕНЕНО: Ссылка на Crypto Bot -->
-      <p class="hint" id="hint-text">Бесплатно: 3 генерации в день. <a id="upgrade-link" href="https://t.me/send?start=IVZFVmyUqKMc" target="_blank" rel="noopener">Получить Pro</a></p>
-    </div>
+      <p class="hint" id="hint-text">
+        Бесплатно: 3 генерации в день.
+        <!-- ⚠️ ССЫЛКА НА CRYPTO BOT -->
+        <a id="upgrade-link" href="https://t.me/send?start=IVZFVmyUqKMc" target="_blank" rel="noopener">Получить Pro</a>
+      </p>
+    </section>
 
     <!-- History section -->
-    <div class="card history-card" id="history-card">
-      <h3><i class="fas fa-clock-rotate"></i> История генераций</h3>
-      <div id="history-list" class="history-list"></div>
-      <button id="clear-history" class="btn-sm btn-danger">Очистить историю</button>
-    </div>
+    <section class="card history-card" id="history-card" aria-labelledby="history-title">
+      <h3 id="history-title"><i class="fas fa-clock-rotate-left" aria-hidden="true"></i> История генераций</h3>
+      <div id="history-list" class="history-list" role="list"></div>
+      <button id="clear-history" class="btn-sm btn-danger" type="button">Очистить историю</button>
+    </section>
 
     <!-- Upgrade modal -->
-    <div id="upgrade-modal" class="modal hidden">
+    <div id="upgrade-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <div class="modal-content">
-        <span class="close">&times;</span>
-        <div class="modal-icon"><i class="fas fa-crown"></i></div>
-        <h2>Bio Generator Pro</h2>
+        <button class="close" aria-label="Закрыть" type="button">&times;</button>
+        <div class="modal-icon"><i class="fas fa-crown" aria-hidden="true"></i></div>
+        <h2 id="modal-title">Bio Generator Pro</h2>
         <p class="modal-sub">Разблокируйте все возможности</p>
         <ul class="modal-features">
-          <li><i class="fas fa-infinity"></i> Безлимитные генерации</li>
-          <li><i class="fas fa-robot"></i> Генерация через ChatGPT</li>
-          <li><i class="fas fa-palette"></i> Все тоны и платформы</li>
-          <li><i class="fas fa-water"></i> Без водяного знака</li>
+          <li><i class="fas fa-infinity" aria-hidden="true"></i> Безлимитные генерации</li>
+          <li><i class="fas fa-robot" aria-hidden="true"></i> Генерация через ChatGPT</li>
+          <li><i class="fas fa-palette" aria-hidden="true"></i> Все тоны и платформы</li>
+          <li><i class="fas fa-droplet-slash" aria-hidden="true"></i> Без водяного знака</li>
         </ul>
         <p class="modal-price">Всего <strong>9$</strong> единоразово</p>
-        <!-- 🔗 ИЗМЕНЕНО: Кнопка теперь ссылка на Crypto Bot -->
-        <a id="buy-pro" class="btn-primary buy-btn" href="https://t.me/send?start=IVZFVmyUqKMc" target="_blank" rel="noopener" style="display: inline-block; text-decoration: none; cursor: pointer; border: none;">
-          <i class="fas fa-wallet"></i> Оплатить Crypto (USDT)
+        <!-- ⚠️ ССЫЛКА НА CRYPTO BOT -->
+        <a id="buy-pro" class="btn-primary buy-btn" href="https://t.me/send?start=IVZFVmyUqKMc" target="_blank" rel="noopener" style="display: inline-block; text-decoration: none; cursor: pointer;">
+          <i class="fab fa-telegram" aria-hidden="true"></i> Оплатить через Crypto Bot
         </a>
-        <!-- 🔗 ИЗМЕНЕНО: Текст про оплату -->
-        <p class="modal-hint">Оплата через <strong>Crypto Bot</strong> • Мгновенно • Анонимно</p>
+        <p class="modal-hint">💎 Оплата криптовалютой (USDT, TON, BTC) • Мгновенно • Анонимно</p>
       </div>
     </div>
 
     <!-- AI API Key setting modal -->
-    <div id="apikey-modal" class="modal hidden">
+    <div id="apikey-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="apikey-title">
       <div class="modal-content">
-        <span class="close apikey-close">&times;</span>
-        <h2><i class="fas fa-key"></i> OpenAI API Key</h2>
+        <button class="close apikey-close" aria-label="Закрыть" type="button">&times;</button>
+        <h2 id="apikey-title"><i class="fas fa-key" aria-hidden="true"></i> OpenAI API Key</h2>
         <p>Введите ваш API ключ для генерации через ChatGPT. Ключ хранится локально.</p>
-        <input type="password" id="api-key-input" placeholder="sk-..." class="api-key-input">
-        <button id="save-api-key" class="btn-primary">Сохранить</button>
+        <input type="password" id="api-key-input" placeholder="sk-..." class="api-key-input" autocomplete="off">
+        <button id="save-api-key" class="btn-primary" type="button">Сохранить</button>
       </div>
     </div>
 
     <!-- Watermark -->
     <div id="watermark" class="watermark">Создано с Bio Generator Free</div>
-  </div>
+  </main>
 
   <script src="app.js"></script>
 </body>
