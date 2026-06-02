@@ -93,6 +93,16 @@
     менеджер: ['#менеджмент', '#лидерство', '#projects', '#agile']
   };
 
+  // Examples data
+  const examplesData = [
+    { prof: 'Маркетолог', int: 'путешествия', plat: 'linkedin', tone: 'professional', bio: 'Маркетолог | страстный путешественник | создаю кампании, которые вдохновляют' },
+    { prof: 'Разработчик', int: 'фотография', plat: 'instagram', tone: 'creative', bio: 'Кодер по будням, фотограф по выходным 📸✨' },
+    { prof: 'Дизайнер', int: 'шахматы', plat: 'twitter', tone: 'witty', bio: 'Дизайнер, который думает на 3 хода вперёд ♟️' },
+    { prof: 'HR-специалист', int: 'йога', plat: 'telegram', tone: 'friendly', bio: 'Помогаю людям найти работу и внутренний баланс 🧘‍♀️' },
+    { prof: 'Менеджер', int: 'кулинария', plat: 'tiktok', tone: 'creative', bio: 'Управляю проектами и рецептами — всё должно быть идеально смешано! 👨‍🍳' },
+    { prof: 'Аналитик', int: 'чтение', plat: 'linkedin', tone: 'professional', bio: 'Вижу паттерны в данных и книгах. Мой следующий инсайт — твоя идея.' }
+  ];
+
   // Core Logic
   function generateBio() {
     const prof = els.profession.value.trim() || 'Профессионал';
@@ -121,7 +131,7 @@
     if (int) {
       int.split(' ').forEach(w => { if(w.length>2) tags.push('#'+w); });
     }
-    return tags.slice(0, 8).join(' ');
+    return [...new Set(tags)].slice(0, 8).join(' ');
   }
 
   function saveToHistory(bio) {
@@ -137,6 +147,39 @@
     els.historyList.innerHTML = history.length 
       ? history.map(h => `<div class="history-item"><span>${h.bio}</span><small>${h.date}</small></div>`).join('')
       : '<p style="color:var(--text-light)">История пуста</p>';
+  }
+
+  // ✅ НОВАЯ ФУНКЦИЯ: Рендер примеров
+  function renderExamples() {
+    if (!els.examplesGrid) return;
+    els.examplesGrid.innerHTML = '';
+    
+    examplesData.forEach(ex => {
+      const card = document.createElement('div');
+      card.className = 'example-card';
+      card.textContent = ex.bio;
+      
+      card.addEventListener('click', () => {
+        els.profession.value = ex.prof;
+        els.interest.value = ex.int;
+        
+        // Set platform
+        const radio = document.querySelector(`input[name="platform"][value="${ex.plat}"]`);
+        if (radio) {
+          radio.checked = true;
+          document.querySelectorAll('.platform-card').forEach(c => c.classList.remove('selected'));
+          radio.parentElement.classList.add('selected');
+        }
+        
+        // Set tone
+        els.tone.value = ex.tone;
+        
+        // Scroll to form
+        els.profession.scrollIntoView({ behavior: 'smooth' });
+      });
+      
+      els.examplesGrid.appendChild(card);
+    });
   }
 
   function updateUI() {
@@ -178,7 +221,7 @@
     updateUI();
     
     // Scroll to result
-    els.result.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => els.result.scrollIntoView({ behavior: 'smooth' }), 100);
   }
 
   // Init
@@ -186,17 +229,20 @@
   els.regenerate.addEventListener('click', handleGenerate);
   
   els.copy.addEventListener('click', () => {
-    navigator.clipboard.writeText(els.output.textContent);
-    alert('Скопировано!');
+    navigator.clipboard.writeText(els.output.textContent).then(() => {
+      alert('Скопировано!');
+    });
   });
 
   els.downloadImg.addEventListener('click', async () => {
     if (typeof html2canvas !== 'undefined') {
-      const canvas = await html2canvas(els.result, { backgroundColor: null });
-      const link = document.createElement('a');
-      link.download = 'bio.png';
-      link.href = canvas.toDataURL();
-      link.click();
+      try {
+        const canvas = await html2canvas(els.result, { backgroundColor: null });
+        const link = document.createElement('a');
+        link.download = 'bio.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      } catch(e) { console.error(e); }
     }
   });
 
@@ -233,4 +279,5 @@
   // Initial render
   updateUI();
   renderHistory();
+  renderExamples(); // ✅ Вызываем рендер примеров при загрузке
 })();
