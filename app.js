@@ -83,7 +83,7 @@
     instagram: ['📸', '✨', '💫'],
     twitter: '',
     telegram: '',
-    tiktok: ['🎵', '🔥', '💃']
+    tiktok: ['🎵', '🔥', '']
   };
 
   const hashtagMap = {
@@ -99,7 +99,7 @@
     { prof: 'Разработчик', int: 'фотография', plat: 'instagram', tone: 'creative', bio: 'Кодер по будням, фотограф по выходным 📸✨' },
     { prof: 'Дизайнер', int: 'шахматы', plat: 'twitter', tone: 'witty', bio: 'Дизайнер, который думает на 3 хода вперёд ♟️' },
     { prof: 'HR-специалист', int: 'йога', plat: 'telegram', tone: 'friendly', bio: 'Помогаю людям найти работу и внутренний баланс 🧘‍♀️' },
-    { prof: 'Менеджер', int: 'кулинария', plat: 'tiktok', tone: 'creative', bio: 'Управляю проектами и рецептами — всё должно быть идеально смешано! 👨‍🍳' },
+    { prof: 'Менеджер', int: 'кулинария', plat: 'tiktok', tone: 'creative', bio: 'Управляю проектами и рецептами — всё должно быть идеально смешано! 👨‍' },
     { prof: 'Аналитик', int: 'чтение', plat: 'linkedin', tone: 'professional', bio: 'Вижу паттерны в данных и книгах. Мой следующий инсайт — твоя идея.' }
   ];
 
@@ -114,7 +114,6 @@
     const template = pool[Math.floor(Math.random() * pool.length)];
     let bio = template.replace(/\{profession\}/g, prof).replace(/\{interest\}/g, int);
 
-    // Add emoji for specific platforms
     const emojis = platformEmojis[platform];
     if (emojis && emojis.length > 0) {
       bio += ' ' + emojis[Math.floor(Math.random() * emojis.length)];
@@ -149,7 +148,6 @@
       : '<p style="color:var(--text-light)">История пуста</p>';
   }
 
-  // ✅ НОВАЯ ФУНКЦИЯ: Рендер примеров
   function renderExamples() {
     if (!els.examplesGrid) return;
     els.examplesGrid.innerHTML = '';
@@ -163,7 +161,6 @@
         els.profession.value = ex.prof;
         els.interest.value = ex.int;
         
-        // Set platform
         const radio = document.querySelector(`input[name="platform"][value="${ex.plat}"]`);
         if (radio) {
           radio.checked = true;
@@ -171,10 +168,7 @@
           radio.parentElement.classList.add('selected');
         }
         
-        // Set tone
         els.tone.value = ex.tone;
-        
-        // Scroll to form
         els.profession.scrollIntoView({ behavior: 'smooth' });
       });
       
@@ -214,13 +208,11 @@
     els.result.classList.remove('hidden');
     els.hashtagOutput.classList.add('hidden');
     
-    // Update counters
     localStorage.setItem(STORAGE_TODAY, getCount(STORAGE_TODAY) + 1);
     localStorage.setItem(STORAGE_TOTAL, getCount(STORAGE_TOTAL) + 1);
     saveToHistory(bio);
     updateUI();
     
-    // Scroll to result
     setTimeout(() => els.result.scrollIntoView({ behavior: 'smooth' }), 100);
   }
 
@@ -261,7 +253,6 @@
     }
   });
 
-  // Platform selection visual
   els.platformRadios.forEach(r => {
     r.addEventListener('change', () => {
       document.querySelectorAll('.platform-card').forEach(c => c.classList.remove('selected'));
@@ -269,15 +260,32 @@
     });
   });
 
-  // Check URL for Pro activation
-  if (new URLSearchParams(window.location.search).get('pro') === 'activated') {
-    localStorage.setItem(STORAGE_PRO, 'true');
-    window.history.replaceState({}, '', window.location.pathname);
-    alert('Pro активирован!');
+  // ✅ ПРОВЕРКА УНИКАЛЬНОГО ТОКЕНА АКТИВАЦИИ
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('token');
+
+  if (token) {
+    const usedTokens = JSON.parse(localStorage.getItem('used_tokens') || '[]');
+    
+    if (!usedTokens.includes(token)) {
+      // Токен новый — активируем Pro
+      localStorage.setItem(STORAGE_PRO, 'true');
+      usedTokens.push(token);
+      localStorage.setItem('used_tokens', JSON.stringify(usedTokens));
+      
+      // Очищаем URL от токена (защита от копирования ссылки)
+      window.history.replaceState({}, '', window.location.pathname);
+      
+      alert('🎉 Pro успешно активирован! Спасибо за покупку.');
+      updateUI();
+    } else {
+      // Токен уже был использован
+      alert('⚠️ Эта ссылка активации уже была использована ранее.');
+    }
   }
 
   // Initial render
   updateUI();
   renderHistory();
-  renderExamples(); // ✅ Вызываем рендер примеров при загрузке
+  renderExamples();
 })();
