@@ -7,6 +7,9 @@
   const STORAGE_PRO = 'bioGenPro';
   const STORAGE_HISTORY = 'bioGenHistory';
   const FREE_LIMIT = 3;
+  
+  // 🔑 СЕКРЕТНЫЙ КЛЮЧ АКТИВАЦИИ (замени на свой!)
+  const ACTIVATION_KEY = 'b1o_g3n_pr0_s3cr3t_k3y_2026_x9z';
 
   // DOM Elements
   const els = {
@@ -25,6 +28,7 @@
     modal: document.getElementById('upgrade-modal'),
     closeModal: document.querySelector('.close'),
     watermark: document.getElementById('watermark'),
+    proStatus: document.getElementById('pro-status'), // ✅ Добавлено
     todayCount: document.getElementById('today-count'),
     totalCount: document.getElementById('total-count'),
     examplesGrid: document.getElementById('examples-grid'),
@@ -176,15 +180,28 @@
     });
   }
 
+  // ✅ ОБНОВЛЕННАЯ ФУНКЦИЯ: теперь меняет и бейдж
   function updateUI() {
     checkDateReset();
     const remaining = FREE_LIMIT - getCount(STORAGE_TODAY);
     
     if (isPro()) {
-      els.watermark.style.display = 'none';
+      // Скрываем водяной знак
+      if (els.watermark) els.watermark.style.display = 'none';
+      
+      // ✅ Меняем текст бейджа с Free на Pro
+      if (els.proStatus) els.proStatus.textContent = 'Pro';
+      
+      // Обновляем подсказку
       els.hint.innerHTML = '🚀 <b>Pro активирован</b> (безлимит)';
     } else {
-      els.watermark.style.display = 'block';
+      // Показываем водяной знак
+      if (els.watermark) els.watermark.style.display = 'block';
+      
+      // ✅ Возвращаем текст бейджа на Free
+      if (els.proStatus) els.proStatus.textContent = 'Free';
+      
+      // Обновляем подсказку
       els.hint.innerHTML = `Бесплатно: ${Math.max(0, remaining)} генераций. <a href="https://t.me/send?start=IVZFVmyUqKMc" target="_blank">Получить Pro</a>`;
     }
     updateStats();
@@ -260,27 +277,25 @@
     });
   });
 
-  // ✅ ПРОВЕРКА УНИКАЛЬНОГО ТОКЕНА АКТИВАЦИИ
+  // ✅ ПРОВЕРКА СЕКРЕТНОГО КЛЮЧА АКТИВАЦИИ
   const params = new URLSearchParams(window.location.search);
-  const token = params.get('token');
+  const key = params.get('key'); // Используем параметр ?key= вместо ?token=
 
-  if (token) {
-    const usedTokens = JSON.parse(localStorage.getItem('used_tokens') || '[]');
-    
-    if (!usedTokens.includes(token)) {
-      // Токен новый — активируем Pro
+  if (key === ACTIVATION_KEY) {
+    if (!localStorage.getItem('pro_activated_once')) {
+      // Первый раз — активируем
       localStorage.setItem(STORAGE_PRO, 'true');
-      usedTokens.push(token);
-      localStorage.setItem('used_tokens', JSON.stringify(usedTokens));
+      localStorage.setItem('pro_activated_once', 'true');
       
-      // Очищаем URL от токена (защита от копирования ссылки)
+      // Очищаем URL от ключа
       window.history.replaceState({}, '', window.location.pathname);
       
       alert('🎉 Pro успешно активирован! Спасибо за покупку.');
       updateUI();
     } else {
-      // Токен уже был использован
-      alert('⚠️ Эта ссылка активации уже была использована ранее.');
+      // Уже активировано на этом устройстве
+      alert('✅ Pro уже активирован на этом устройстве.');
+      updateUI();
     }
   }
 
