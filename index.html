@@ -23,7 +23,11 @@
   <main class="container" id="app">
     <header class="header">
       <div class="logo"><i class="fas fa-feather-alt"></i> Bio Generator</div>
-      <div class="badge" id="pro-badge"><i class="fas fa-crown"></i> <span id="pro-status">Free</span></div>
+      <!-- ВАЖНО: id="pro-status" нужен для работы скрипта активации -->
+      <div class="badge" id="pro-badge">
+        <i class="fas fa-crown"></i> 
+        <span id="pro-status">Free</span>
+      </div>
     </header>
     
     <p class="subtitle">Профессиональные описания для LinkedIn, Instagram, Twitter, Telegram и TikTok</p>
@@ -36,12 +40,12 @@
     <section class="card main-card">
       <div class="form-group">
         <label for="profession"><i class="fas fa-briefcase"></i> Профессия или роль:</label>
-        <input type="text" id="profession" placeholder="Например: маркетолог, разработчик" required>
+        <input type="text" id="profession" placeholder="Например: маркетолог, разработчик" required autocomplete="off">
       </div>
 
       <div class="form-group">
         <label for="interest"><i class="fas fa-heart"></i> Хобби (опционально):</label>
-        <input type="text" id="interest" placeholder="Например: путешествия, фотография">
+        <input type="text" id="interest" placeholder="Например: путешествия, фотография" autocomplete="off">
       </div>
 
       <div class="form-group">
@@ -80,7 +84,7 @@
         </select>
       </div>
 
-      <button id="generate" class="btn-primary">
+      <button id="generate" class="btn-primary" type="button">
         <i class="fas fa-wand-magic-sparkles"></i> Сгенерировать bio
       </button>
     </section>
@@ -94,15 +98,15 @@
     <div id="result" class="hidden card result-card fade-in">
       <div class="result-header">
         <h2><i class="fas fa-check-circle"></i> Готово!</h2>
-        <button id="regenerate" class="btn-sm" title="Ещё вариант"><i class="fas fa-rotate"></i></button>
+        <button id="regenerate" class="btn-sm" title="Ещё вариант" type="button"><i class="fas fa-rotate"></i></button>
       </div>
       <div class="bio-output" id="bio-output"></div>
       <div class="bio-actions">
-        <button id="copy" class="btn-secondary"><i class="fas fa-copy"></i> Копировать</button>
-        <button id="download-img" class="btn-secondary"><i class="fas fa-image"></i> Скачать</button>
+        <button id="copy" class="btn-secondary" type="button"><i class="fas fa-copy"></i> Копировать</button>
+        <button id="download-img" class="btn-secondary" type="button"><i class="fas fa-image"></i> Скачать</button>
       </div>
       <div class="hashtag-section">
-        <button id="generate-hashtags" class="btn-outline"><i class="fas fa-hashtag"></i> Хэштеги</button>
+        <button id="generate-hashtags" class="btn-outline" type="button"><i class="fas fa-hashtag"></i> Хэштеги</button>
         <div id="hashtag-output" class="hashtag-output hidden"></div>
       </div>
       <p class="hint" id="hint-text">
@@ -114,13 +118,13 @@
     <section class="card history-card">
       <h3><i class="fas fa-clock-rotate-left"></i> История</h3>
       <div id="history-list" class="history-list"></div>
-      <button id="clear-history" class="btn-sm btn-danger">Очистить</button>
+      <button id="clear-history" class="btn-sm btn-danger" type="button">Очистить</button>
     </section>
 
     <!-- Модальное окно Pro -->
-    <div id="upgrade-modal" class="modal hidden">
+    <div id="upgrade-modal" class="modal hidden" role="dialog" aria-modal="true">
       <div class="modal-content">
-        <button class="close" aria-label="Закрыть">&times;</button>
+        <button class="close" aria-label="Закрыть" type="button">&times;</button>
         <div class="modal-icon"><i class="fas fa-crown"></i></div>
         <h2>Bio Generator Pro</h2>
         <ul class="modal-features">
