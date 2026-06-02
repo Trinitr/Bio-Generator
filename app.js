@@ -8,7 +8,7 @@
   const STORAGE_HISTORY = 'bioGenHistory';
   const FREE_LIMIT = 3;
   
-  // 🔑 СЕКРЕТНЫЙ КЛЮЧ АКТИВАЦИИ (замени на свой!)
+  // 🔑 ЗАМЕНИ ЭТОТ КЛЮЧ ПОСЛЕ КАЖДОЙ ПРОДАЖИ!
   const ACTIVATION_KEY = 'b1o_g3n_pr0_s3cr3t_k3y_2026_x9z';
 
   // DOM Elements
@@ -28,7 +28,7 @@
     modal: document.getElementById('upgrade-modal'),
     closeModal: document.querySelector('.close'),
     watermark: document.getElementById('watermark'),
-    proStatus: document.getElementById('pro-status'), // ✅ Добавлено
+    proStatus: document.getElementById('pro-status'),
     todayCount: document.getElementById('today-count'),
     totalCount: document.getElementById('total-count'),
     examplesGrid: document.getElementById('examples-grid'),
@@ -58,7 +58,7 @@
     els.totalCount.textContent = getCount(STORAGE_TOTAL);
   }
 
-  // Templates
+  // Templates (Free)
   const templates = {
     professional: [
       '{profession} | building {interest} | helping others grow',
@@ -78,6 +78,25 @@
     witty: [
       '{profession} (no, I don\'t fix printers). {interest} enthusiast.',
       '{profession}. {interest}. Fluent in sarcasm and coffee.',
+      'I put the "pro" in {profession} and the "fun" in {interest}.'
+    ]
+  };
+
+  // ✅ Templates (Pro Only)
+  const proTemplates = {
+    mysterious: [
+      '{profession} | {interest} | I know what you did last summer. Just kidding… or am I? 👀',
+      'Don\'t let the {profession} fool you – I\'m really here for the {interest}.',
+      'Sometimes {profession}. Always {interest}. Never ordinary.'
+    ],
+    inspiring: [
+      '{profession} on a mission to make {interest} accessible to everyone.',
+      'I believe {interest} can change the world. As a {profession}, I\'m building that future.',
+      'Do what you love. {profession} | {interest} | changing lives through dedication.'
+    ],
+    humorous: [
+      'Why did the {profession} cross the road? To get to the {interest}!',
+      '{profession} by trade, {interest} by passion. My resume is weird but my skills are real.',
       'I put the "pro" in {profession} and the "fun" in {interest}.'
     ]
   };
@@ -114,10 +133,25 @@
     const platform = document.querySelector('input[name="platform"]:checked').value;
     const tone = els.tone.value;
 
-    const pool = templates[tone] || templates.friendly;
+    // ✅ ПРОВЕРКА: Если выбран Pro-тон, но нет активации
+    const proTones = ['mysterious', 'inspiring', 'humorous'];
+    if (proTones.includes(tone) && !isPro()) {
+      els.modal.classList.remove('hidden'); // Показываем окно оплаты
+      return null; // Прерываем генерацию
+    }
+
+    // Выбираем правильный пул шаблонов
+    let pool;
+    if (proTones.includes(tone)) {
+      pool = proTemplates[tone]; // Берем Pro-шаблоны
+    } else {
+      pool = templates[tone] || templates.friendly; // Берем обычные
+    }
+
     const template = pool[Math.floor(Math.random() * pool.length)];
     let bio = template.replace(/\{profession\}/g, prof).replace(/\{interest\}/g, int);
 
+    // Добавляем эмодзи платформы
     const emojis = platformEmojis[platform];
     if (emojis && emojis.length > 0) {
       bio += ' ' + emojis[Math.floor(Math.random() * emojis.length)];
@@ -180,39 +214,40 @@
     });
   }
 
-  // ✅ ОБНОВЛЕННАЯ ФУНКЦИЯ: теперь меняет и бейдж
+  // ✅ ОБНОВЛЕННАЯ ФУНКЦИЯ UI
   function updateUI() {
     checkDateReset();
     const remaining = FREE_LIMIT - getCount(STORAGE_TODAY);
     
     if (isPro()) {
-      // Скрываем водяной знак
       if (els.watermark) els.watermark.style.display = 'none';
-      
-      // ✅ Меняем текст бейджа с Free на Pro
       if (els.proStatus) els.proStatus.textContent = 'Pro';
-      
-      // Обновляем подсказку
       els.hint.innerHTML = '🚀 <b>Pro активирован</b> (безлимит)';
+      
+      // ✅ РАЗБЛОКИРУЕМ PRO-ОПЦИИ В СПИСКЕ
+      document.querySelectorAll('.pro-option').forEach(opt => {
+        opt.disabled = false;
+        // Убираем пометку (Pro) для красоты, если хочешь
+        // opt.textContent = opt.textContent.replace(' (Pro)', ''); 
+      });
+
     } else {
-      // Показываем водяной знак
       if (els.watermark) els.watermark.style.display = 'block';
-      
-      // ✅ Возвращаем текст бейджа на Free
       if (els.proStatus) els.proStatus.textContent = 'Free';
-      
-      // Обновляем подсказку
       els.hint.innerHTML = `Бесплатно: ${Math.max(0, remaining)} генераций. <a href="https://t.me/send?start=IVZFVmyUqKMc" target="_blank">Получить Pro</a>`;
+      
+      // ✅ БЛОКИРУЕМ PRO-ОПЦИИ
+      document.querySelectorAll('.pro-option').forEach(opt => {
+        opt.disabled = true;
+      });
     }
     updateStats();
   }
 
   // Event Handlers
   function handleGenerate() {
-    if (!els.profession.value.trim()) {
-      alert('Введите профессию');
-      return;
-    }
+    const bio = generateBio();
+    if (!bio) return; // Если bio null (показали модалку), прерываем
 
     checkDateReset();
     if (!isPro() && getCount(STORAGE_TODAY) >= FREE_LIMIT) {
@@ -220,7 +255,6 @@
       return;
     }
 
-    const bio = generateBio();
     els.output.textContent = bio;
     els.result.classList.remove('hidden');
     els.hashtagOutput.classList.add('hidden');
@@ -279,21 +313,16 @@
 
   // ✅ ПРОВЕРКА СЕКРЕТНОГО КЛЮЧА АКТИВАЦИИ
   const params = new URLSearchParams(window.location.search);
-  const key = params.get('key'); // Используем параметр ?key= вместо ?token=
+  const key = params.get('key'); 
 
   if (key === ACTIVATION_KEY) {
     if (!localStorage.getItem('pro_activated_once')) {
-      // Первый раз — активируем
       localStorage.setItem(STORAGE_PRO, 'true');
       localStorage.setItem('pro_activated_once', 'true');
-      
-      // Очищаем URL от ключа
       window.history.replaceState({}, '', window.location.pathname);
-      
       alert('🎉 Pro успешно активирован! Спасибо за покупку.');
       updateUI();
     } else {
-      // Уже активировано на этом устройстве
       alert('✅ Pro уже активирован на этом устройстве.');
       updateUI();
     }
