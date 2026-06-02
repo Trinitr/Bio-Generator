@@ -5,12 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bio Generator — генератор описаний для соцсетей</title>
   <meta name="description" content="Бесплатный генератор био для LinkedIn, Instagram, Twitter, Telegram и TikTok. Создай профессиональное описание профиля за 30 секунд.">
-  <meta name="keywords" content="генератор био, bio generator, описание профиля, linkedin bio, instagram bio, telegram bio">
-  
-  <!-- Open Graph -->
-  <meta property="og:title" content="Bio Generator — генератор описаний для соцсетей">
-  <meta property="og:description" content="Создай цепляющее био для любой соцсети за 30 секунд. Бесплатно.">
-  <meta property="og:type" content="website">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +17,6 @@
   <main class="container" id="app">
     <header class="header">
       <div class="logo"><i class="fas fa-feather-alt"></i> Bio Generator</div>
-      <!-- ВАЖНО: id="pro-status" нужен для работы скрипта активации -->
       <div class="badge" id="pro-badge">
         <i class="fas fa-crown"></i> 
         <span id="pro-status">Free</span>
@@ -81,6 +74,10 @@
           <option value="friendly">😊 Дружелюбный</option>
           <option value="creative">🎨 Творческий</option>
           <option value="witty">😂 Остроумный</option>
+          <!-- ✅ PRO ОПЦИИ ВЕРНУТЫ -->
+          <option value="mysterious" class="pro-option" disabled>🔮 Таинственный (Pro)</option>
+          <option value="inspiring" class="pro-option" disabled>🌟 Вдохновляющий (Pro)</option>
+          <option value="humorous" class="pro-option" disabled>🎭 Юмористический (Pro)</option>
         </select>
       </div>
 
