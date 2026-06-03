@@ -1,4 +1,36 @@
-:root {
+/* ✅ СТИЛИ ДЛЯ ПЕРЕКЛЮЧАТЕЛЯ ЯЗЫКА */
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(79, 70, 229, 0.1);
+  padding: 0.3rem 0.8rem;
+  border-radius: 99px;
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0.2rem;
+  transition: color 0.2s;
+}
+
+.lang-btn.active {
+  color: var(--primary);
+}
+
+.lang-btn:hover {
+  color: var(--primary);
+}
+
+.divider {
+  color: var(--border);
+  font-size: 0.8rem;
+}:root {
   --bg: #F3F4F6;
   --card: #FFFFFF;
   --text: #1F2937;
