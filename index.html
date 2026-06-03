@@ -31,6 +31,16 @@
     </div>
 
     <section class="card main-card">
+      <!-- ✅ НОВОЕ: Выбор языка -->
+      <div class="form-group">
+        <label for="language"><i class="fas fa-language"></i> Язык био:</label>
+        <select id="language">
+          <option value="ru">🇷 Русский</option>
+          <option value="en">🇬🇧 English</option>
+          <option value="both">🌍 Оба языка (RU + EN)</option>
+        </select>
+      </div>
+
       <div class="form-group">
         <label for="profession"><i class="fas fa-briefcase"></i> Профессия или роль:</label>
         <input type="text" id="profession" placeholder="Например: маркетолог, разработчик" required autocomplete="off">
@@ -74,7 +84,6 @@
           <option value="friendly">😊 Дружелюбный</option>
           <option value="creative">🎨 Творческий</option>
           <option value="witty">😂 Остроумный</option>
-          <!-- ✅ PRO ОПЦИИ ВЕРНУТЫ -->
           <option value="mysterious" class="pro-option" disabled>🔮 Таинственный (Pro)</option>
           <option value="inspiring" class="pro-option" disabled>🌟 Вдохновляющий (Pro)</option>
           <option value="humorous" class="pro-option" disabled>🎭 Юмористический (Pro)</option>
