@@ -13,7 +13,7 @@
 
   // DOM Elements
   const els = {
-    language: document.getElementById('language'), // ✅ Добавлено
+    language: document.getElementById('language'),
     profession: document.getElementById('profession'),
     interest: document.getElementById('interest'),
     tone: document.getElementById('tone'),
@@ -41,6 +41,7 @@
   // Helpers
   const isPro = () => localStorage.getItem(STORAGE_PRO) === 'true';
   const getTodayStr = () => new Date().toISOString().slice(0, 10);
+  const hasCyrillic = (str) => /[а-яА-ЯёЁ]/.test(str);
   
   function getCount(key) {
     return parseInt(localStorage.getItem(key) || '0', 10);
@@ -59,12 +60,12 @@
     els.totalCount.textContent = getCount(STORAGE_TOTAL);
   }
 
-  // ✅ ШАБЛОНЫ НА РУССКОМ
+  // ✅ РУССКИЕ ШАБЛОНЫ
   const templatesRu = {
     professional: [
       '{profession} | развиваюсь в {interest} | помогаю другим расти',
       '{profession}, специализирующийся на {interest} – превращаю сложное в понятное',
-      'Сейчас: {profession} с passion к {interest}. Всегда учусь, всегда создаю.'
+      'Сейчас: {profession} с страстью к {interest}. Всегда учусь, всегда создаю.'
     ],
     friendly: [
       '{profession} днём, {interest} ночью. Люблю кофе и интересные проекты ☕',
@@ -83,31 +84,35 @@
     ]
   };
 
-  // ✅ ШАБЛОНЫ НА АНГЛИЙСКОМ
+  // ✅ АНГЛИЙСКИЕ ШАБЛОНЫ (С универсальными вариантами)
   const templatesEn = {
     professional: [
       '{profession} | building {interest} | helping others grow',
       '{profession} specializing in {interest} – turning complexity into clarity',
-      'Currently: {profession} with a passion for {interest}. Always learning.'
+      'Driven professional | Passionate about growth and innovation 🚀', // Универсальный
+      'Turning ideas into reality | Always learning, always shipping'     // Универсальный
     ],
     friendly: [
       '{profession} by day, {interest} by night. Coffee addict ☕',
       'Hey! I\'m a {profession} who loves {interest}. Let\'s connect!',
-      'Just a {profession} trying to make the world better. Ask me about {interest}!'
+      'Just a human trying to make the world better ✨ | Good vibes only', // Универсальный
+      'Smiles, coffee, and good times | Always up for a chat'             // Универсальный
     ],
     creative: [
       '{profession} / {interest} / daydreamer. Creating things that matter.',
       'Imagination is my playground – {profession} & {interest} enthusiast.',
-      'Crafting stories as a {profession}, finding inspiration in {interest}.'
+      'Dreamer. Creator. Doer. | Finding beauty in the everyday 🎨',       // Универсальный
+      'Art meets life | Exploring the intersection of creativity and tech' // Универсальный
     ],
     witty: [
       '{profession} (no, I don\'t fix printers). {interest} enthusiast.',
       '{profession}. {interest}. Fluent in sarcasm and coffee.',
-      'I put the "pro" in {profession} and the "fun" in {interest}.'
+      'I put the "pro" in procrastination (just kidding) 😂',             // Универсальный
+      'Professional overthinker | Powered by caffeine and deadlines'      // Универсальный
     ]
   };
 
-  // ✅ PRO ШАБЛОНЫ НА РУССКОМ
+  // ✅ PRO РУССКИЕ
   const proTemplatesRu = {
     mysterious: [
       '{profession} | {interest} | Я знаю, что ты сделал прошлым летом… или нет? 👀',
@@ -126,7 +131,7 @@
     ]
   };
 
-  // ✅ PRO ШАБЛОНЫ НА АНГЛИЙСКОМ
+  // ✅ PRO АНГЛИЙСКИЕ
   const proTemplatesEn = {
     mysterious: [
       '{profession} | {interest} | I know what you did last summer. Just kidding… or am I? 👀',
@@ -164,19 +169,28 @@
   const examplesData = [
     { prof: 'Маркетолог', int: 'путешествия', plat: 'linkedin', tone: 'professional', lang: 'ru', bio: 'Маркетолог | страстный путешественник | создаю кампании, которые вдохновляют' },
     { prof: 'Разработчик', int: 'фотография', plat: 'instagram', tone: 'creative', lang: 'ru', bio: 'Кодер по будням, фотограф по выходным 📸✨' },
-    { prof: 'Designer', int: 'chess', plat: 'twitter', tone: 'witty', lang: 'en', bio: 'Designer who thinks 3 moves ahead ♟️' },
+    { prof: 'Developer', int: 'photography', plat: 'twitter', tone: 'witty', lang: 'en', bio: 'Coder by day, photographer by night 📸✨' },
     { prof: 'HR Specialist', int: 'yoga', plat: 'telegram', tone: 'friendly', lang: 'en', bio: 'Helping people find jobs and inner balance 🧘‍♀️' },
     { prof: 'Менеджер', int: 'кулинария', plat: 'tiktok', tone: 'creative', lang: 'ru', bio: 'Управляю проектами и рецептами — всё должно быть идеально смешано! 👨‍' },
     { prof: 'Analyst', int: 'reading', plat: 'linkedin', tone: 'professional', lang: 'en', bio: 'I see patterns in data and books. My next insight is your idea.' }
   ];
 
   // Core Logic
+  function createBioFromTemplate(template, prof, int, platform) {
+    let bio = template.replace(/\{profession\}/g, prof).replace(/\{interest\}/g, int);
+    const emojis = platformEmojis[platform];
+    if (emojis && emojis.length > 0) {
+      bio += ' ' + emojis[Math.floor(Math.random() * emojis.length)];
+    }
+    return bio;
+  }
+
   function generateBio() {
-    const prof = els.profession.value.trim() || 'Профессионал';
-    const int = els.interest.value.trim() || 'развитие';
+    const profInput = els.profession.value.trim();
+    const intInput = els.interest.value.trim();
     const platform = document.querySelector('input[name="platform"]:checked').value;
     const tone = els.tone.value;
-    const lang = els.language.value; // ✅ Получаем выбранный язык
+    const lang = els.language.value;
 
     // Проверка Pro-тонов
     const proTones = ['mysterious', 'inspiring', 'humorous'];
@@ -185,36 +199,37 @@
       return null;
     }
 
-    // Выбираем шаблоны по языку
-    let poolRu, poolEn;
-    if (proTones.includes(tone)) {
-      poolRu = proTemplatesRu[tone];
-      poolEn = proTemplatesEn[tone];
-    } else {
-      poolRu = templatesRu[tone] || templatesRu.friendly;
-      poolEn = templatesEn[tone] || templatesEn.friendly;
-    }
+    // Определяем пулы шаблонов
+    const poolRu = proTones.includes(tone) ? proTemplatesRu[tone] : templatesRu[tone];
+    const poolEn = proTones.includes(tone) ? proTemplatesEn[tone] : templatesEn[tone];
 
-    // Генерируем био в зависимости от выбора языка
+    // Логика подстановки значений (защита от "кривого" английского)
+    const isCyrillicProf = hasCyrillic(profInput);
+    const isCyrillicInt = hasCyrillic(intInput);
+
+    // Значения для RU
+    const valRuProf = profInput || 'Профессионал';
+    const valRuInt = intInput || 'развитие';
+
+    // Значения для EN (если ввели кириллицу, берем дефолтные английские слова)
+    const valEnProf = (!isCyrillicProf && profInput) ? profInput : 'Professional';
+    const valEnInt = (!isCyrillicInt && intInput) ? intInput : 'growth';
+
     let bios = [];
-    
+
+    // Генерация для RU
     if (lang === 'ru' || lang === 'both') {
-      const templateRu = poolRu[Math.floor(Math.random() * poolRu.length)];
-      let bioRu = templateRu.replace(/\{profession\}/g, prof).replace(/\{interest\}/g, int);
-      const emojis = platformEmojis[platform];
-      if (emojis && emojis.length > 0) bioRu += ' ' + emojis[Math.floor(Math.random() * emojis.length)];
-      bios.push({ lang: 'ru', text: bioRu });
+      const t = poolRu[Math.floor(Math.random() * poolRu.length)];
+      bios.push({ lang: 'ru', text: createBioFromTemplate(t, valRuProf, valRuInt, platform) });
     }
     
+    // Генерация для EN
     if (lang === 'en' || lang === 'both') {
-      const templateEn = poolEn[Math.floor(Math.random() * poolEn.length)];
-      let bioEn = templateEn.replace(/\{profession\}/g, prof).replace(/\{interest\}/g, int);
-      const emojis = platformEmojis[platform];
-      if (emojis && emojis.length > 0) bioEn += ' ' + emojis[Math.floor(Math.random() * emojis.length)];
-      bios.push({ lang: 'en', text: bioEn });
+      const t = poolEn[Math.floor(Math.random() * poolEn.length)];
+      bios.push({ lang: 'en', text: createBioFromTemplate(t, valEnProf, valEnInt, platform) });
     }
 
-    return bios; // Возвращаем массив объектов {lang, text}
+    return bios;
   }
 
   function generateHashtags() {
@@ -264,7 +279,7 @@
         }
         
         els.tone.value = ex.tone;
-        els.language.value = ex.lang; // ✅ Устанавливаем язык примера
+        els.language.value = ex.lang;
         
         els.profession.scrollIntoView({ behavior: 'smooth' });
       });
@@ -301,7 +316,7 @@
   // Event Handlers
   function handleGenerate() {
     const bios = generateBio();
-    if (!bios) return; // Если null (показали модалку), прерываем
+    if (!bios) return; 
 
     checkDateReset();
     if (!isPro() && getCount(STORAGE_TODAY) >= FREE_LIMIT) {
@@ -309,7 +324,7 @@
       return;
     }
 
-    // ✅ Форматируем вывод для отображения
+    // Форматируем вывод
     let displayText = '';
     let copyText = '';
     
@@ -317,9 +332,9 @@
       displayText = bios[0].text;
       copyText = bios[0].text;
     } else {
-      // Если 2 языка, показываем красиво
+      // Если 2 языка, показываем с флагами
       displayText = bios.map(b => {
-        const flag = b.lang === 'ru' ? '🇷🇺' : '🇬🇧';
+        const flag = b.lang === 'ru' ? '🇷🇺' : '🇬';
         return `${flag} ${b.text}`;
       }).join('\n\n');
       
@@ -332,7 +347,7 @@
     
     localStorage.setItem(STORAGE_TODAY, getCount(STORAGE_TODAY) + 1);
     localStorage.setItem(STORAGE_TOTAL, getCount(STORAGE_TOTAL) + 1);
-    saveToHistory(copyText); // Сохраняем чистый текст в историю
+    saveToHistory(copyText);
     updateUI();
     
     setTimeout(() => els.result.scrollIntoView({ behavior: 'smooth' }), 100);
@@ -343,8 +358,7 @@
   els.regenerate.addEventListener('click', handleGenerate);
   
   els.copy.addEventListener('click', () => {
-    // Копируем чистый текст без флагов
-    const rawText = els.output.textContent.replace(/🇷 |🇬🇧 /g, '');
+    const rawText = els.output.textContent.replace(/🇷🇺 |🇬🇧 /g, '');
     navigator.clipboard.writeText(rawText).then(() => {
       alert('Скопировано!');
     });
