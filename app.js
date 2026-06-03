@@ -153,12 +153,27 @@
     дизайнер: ['#design', '#UX'], менеджер: ['#management', '#leadership']
   };
 
-  // Examples data (строго разделены)
+   // Examples data (расширенный список)
   const examplesData = [
+    // 🇷 Русские примеры
     { prof: 'Маркетолог', int: 'путешествия', plat: 'linkedin', tone: 'professional', lang: 'ru', bio: 'Маркетолог | страстный путешественник | создаю кампании, которые вдохновляют' },
     { prof: 'Разработчик', int: 'фотография', plat: 'instagram', tone: 'creative', lang: 'ru', bio: 'Кодер по будням, фотограф по выходным 📸✨' },
+    { prof: 'Дизайнер', int: 'шахматы', plat: 'twitter', tone: 'witty', lang: 'ru', bio: 'Дизайнер, который думает на 3 хода вперёд ♟️' },
+    { prof: 'HR-специалист', int: 'йога', plat: 'telegram', tone: 'friendly', lang: 'ru', bio: 'Помогаю людям найти работу и внутренний баланс 🧘‍♀️' },
+    { prof: 'Менеджер', int: 'кулинария', plat: 'tiktok', tone: 'creative', lang: 'ru', bio: 'Управляю проектами и рецептами — всё должно быть идеально смешано! 👨‍🍳' },
+    { prof: 'Аналитик', int: 'чтение', plat: 'linkedin', tone: 'professional', lang: 'ru', bio: 'Вижу паттерны в данных и книгах. Мой следующий инсайт — твоя идея.' },
+    { prof: 'Копирайтер', int: 'кино', plat: 'instagram', tone: 'creative', lang: 'ru', bio: 'Пишу тексты, которые продают. Люблю хорошее кино и крепкий кофе ☕🎬' },
+    { prof: 'Предприниматель', int: 'спорт', plat: 'linkedin', tone: 'inspiring', lang: 'ru', bio: 'Строю бизнес с нуля. Спорт учит дисциплине, которая нужна в каждом проекте 💪' },
+    
+    // 🇬 English examples
     { prof: 'Developer', int: 'photography', plat: 'twitter', tone: 'witty', lang: 'en', bio: 'Coder by day, photographer by night 📸✨' },
-    { prof: 'HR Specialist', int: 'yoga', plat: 'telegram', tone: 'friendly', lang: 'en', bio: 'Helping people find jobs and inner balance 🧘‍♀️' }
+    { prof: 'HR Specialist', int: 'yoga', plat: 'telegram', tone: 'friendly', lang: 'en', bio: 'Helping people find jobs and inner balance 🧘‍♀️' },
+    { prof: 'Designer', int: 'chess', plat: 'twitter', tone: 'witty', lang: 'en', bio: 'Designer who thinks 3 moves ahead ♟️' },
+    { prof: 'Marketer', int: 'travel', plat: 'linkedin', tone: 'professional', lang: 'en', bio: 'Marketer | Passionate traveler | Creating campaigns that inspire' },
+    { prof: 'Manager', int: 'cooking', plat: 'tiktok', tone: 'creative', lang: 'en', bio: 'Managing projects and recipes — everything must be perfectly mixed! 👨‍🍳' },
+    { prof: 'Analyst', int: 'reading', plat: 'linkedin', tone: 'professional', lang: 'en', bio: 'I see patterns in data and books. My next insight is your idea.' },
+    { prof: 'Copywriter', int: 'movies', plat: 'instagram', tone: 'creative', lang: 'en', bio: 'Writing words that sell. Love good movies and strong coffee ☕🎬' },
+    { prof: 'Entrepreneur', int: 'fitness', plat: 'linkedin', tone: 'inspiring', lang: 'en', bio: 'Building business from scratch. Fitness teaches the discipline needed in every project 💪' }
   ];
 
   // Core Logic
