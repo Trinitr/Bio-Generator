@@ -54,8 +54,36 @@ input:focus, select:focus { outline: none; border-color: var(--primary); }
 .btn-primary:hover { opacity: 0.9; }
 
 .examples-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-.example-card { background: var(--bg); padding: 1rem; border-radius: 8px; cursor: pointer; font-size: 0.85rem; color: var(--text); border: 1px solid var(--border); min-height: 60px; display: flex; align-items: center; }
-.example-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+/* ✅ ИСПРАВЛЕННЫЕ СТИЛИ ДЛЯ КАРТОЧЕК ПРИМЕРОВ */
+.example-card { 
+  background: var(--bg); 
+  padding: 1rem; 
+  border-radius: 8px; 
+  cursor: pointer; 
+  font-size: 0.85rem; 
+  color: var(--text); 
+  border: 1px solid var(--border); 
+  min-height: 80px; /* Минимальная высота, но может растягиваться */
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  text-align: center;
+  word-break: break-word; /* Перенос длинных слов */
+  line-height: 1.4;
+  transition: all 0.2s ease;
+}
+
+.example-card:hover { 
+  transform: translateY(-2px); 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+  border-color: var(--primary);
+}
+
+.example-card p {
+  margin: 0;
+  width: 100%;
+}
 
 .hidden { display: none !important; }
 .result-card { text-align: center; }
@@ -82,3 +110,8 @@ input:focus, select:focus { outline: none; border-color: var(--primary); }
 .modal-hint { font-size: 0.8rem; color: var(--text-light); margin-top: 0.5rem; }
 
 .watermark { position: fixed; bottom: 1rem; right: 1rem; font-size: 0.7rem; color: var(--text-light); opacity: 0.5; }
+
+/* Адаптивность для мобильных */
+@media (max-width: 640px) {
+  .examples-grid { grid-template-columns: 1fr; }
+}
