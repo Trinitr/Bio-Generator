@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bio-generator-git-main-akex-s-projects.vercel.app/sitemap.xml
+Sitemap: https://bio-generator-six.vercel.app/sitemap.xml
 
 # Блокируем системные пути
 Disallow: /api/
